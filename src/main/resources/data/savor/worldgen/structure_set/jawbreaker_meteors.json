@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "savor:jawbreaker_meteors",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 1606488793,
+    "spacing": 40,
+    "separation": 12,
+    "type": "minecraft:random_spread"
+  }
+}

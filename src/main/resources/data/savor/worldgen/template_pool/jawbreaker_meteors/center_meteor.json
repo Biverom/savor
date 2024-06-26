@@ -1,0 +1,15 @@
+{
+  "name": "savor:jawbreaker_meteors/center_meteor",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "savor:jawbreaker_meteors/center_meteor",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

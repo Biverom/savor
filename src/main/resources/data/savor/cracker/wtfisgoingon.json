@@ -1,0 +1,12 @@
+{
+  "item": "minecraft:sand",
+  "results": [
+    {
+      "item": "minecraft:poppy",
+      "count": 2
+    },
+    {
+      "item": "minecraft:nether_star"
+    }
+  ]
+}

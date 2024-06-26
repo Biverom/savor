@@ -1,0 +1,10 @@
+{
+  "parent": "block/cake_slice6",
+  "textures": {
+    "particle": "savor:block/lemon_cake_side",
+    "bottom": "savor:block/lemon_cake_bottom",
+    "top": "savor:block/lemon_cake_top",
+    "side": "savor:block/lemon_cake_side",
+    "inside": "savor:block/lemon_cake_inner"
+  }
+}

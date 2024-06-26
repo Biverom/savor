@@ -1,0 +1,10 @@
+{
+  "parent": "block/cake",
+  "textures": {
+    "particle": "savor:block/nether_cola_cake_side",
+    "bottom": "savor:block/nether_cola_cake_bottom",
+    "top": "savor:block/nether_cola_cake_top",
+    "side": "savor:block/nether_cola_cake_side",
+    "inside": "savor:block/nether_cola_cake_inner"
+  }
+}

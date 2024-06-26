@@ -1,0 +1,10 @@
+{
+  "parent": "block/cake",
+  "textures": {
+    "particle": "savor:block/caramel_cake_side",
+    "bottom": "savor:block/caramel_cake_bottom",
+    "top": "savor:block/caramel_cake_top",
+    "side": "savor:block/caramel_cake_side",
+    "inside": "savor:block/caramel_cake_inner"
+  }
+}

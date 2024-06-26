@@ -1,0 +1,18 @@
+{
+  "effect.absolute.evade": {
+    "category" : "player",
+    "sounds": [
+      "savor:effect/absolute/evade1",
+      "savor:effect/absolute/evade2",
+      "savor:effect/absolute/evade3"
+    ],
+    "subtitle": "savor.subtitles.effect.absolute.evade"
+  },
+  "effect.absolute.evade_last": {
+    "category" : "player",
+    "sounds": [
+      "savor:effect/absolute/evade_last"
+    ],
+    "subtitle": "savor.subtitles.effect.absolute.evade_last"
+  }
+}

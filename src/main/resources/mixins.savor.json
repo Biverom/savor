@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.notjang.savor.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "mixins.savor.refmap.json",
+  "mixins": [
+    "ItemFlavoredFood"
+  ],
+  "client": [
+    "LocalPlayerFlavoredFood"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
