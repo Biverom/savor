@@ -2,6 +2,7 @@ package com.notjang.savor.init;
 
 import com.google.common.base.Supplier;
 import com.notjang.savor.SavorMod;
+import com.notjang.savor.block.SaltBlock;
 import com.notjang.savor.init.ItemInit.InitFoods;
 import com.teamabnormals.neapolitan.common.block.FlavoredCakeBlock;
 import net.minecraft.core.Direction;
@@ -58,7 +59,10 @@ public class BlockInit {
 					.sound(SoundType.METAL).requiresCorrectToolForDrops()),
 			object -> () -> new BlockItem(object.get(), new Item.Properties().tab(SavorMod.SAVOR_TAB)));
 
-	//public static final RegistryObject<Block> OAK_LOG = register("oak_log", log(MaterialColor.WOOD, MaterialColor.PODZOL));
+	public static final RegistryObject<Block> SALT_BLOCK = register("salt_block",
+			() -> new SaltBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_GRAY).randomTicks().strength(3.0f)
+					.sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()),
+			object -> () -> new BlockItem(object.get(), new Item.Properties().tab(SavorMod.SAVOR_TAB)));
 
 	private static RotatedPillarBlock log(MaterialColor p_50789_, MaterialColor p_50790_) {
 		return new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, (p_152624_) -> p_152624_.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? p_50789_ : p_50790_).strength(2.0F).sound(SoundType.WOOD));
@@ -70,7 +74,7 @@ public class BlockInit {
 
 	private static <T extends Block> RegistryObject<T> register(final String name, final java.util.function.Supplier<? extends T> block,
 			Function<RegistryObject<T>, Supplier<? extends Item>> item) {
-		RegistryObject<T> obj = registerBlock(name, block::get);
+		RegistryObject<T> obj = registerBlock(name, block);
 		ITEMS.register(name, item.apply(obj));
 		return obj;
 	}

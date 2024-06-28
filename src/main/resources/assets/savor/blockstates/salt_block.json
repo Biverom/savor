@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"": {
+			"model": "savor:block/salt_block"
+		}
+	}
+}

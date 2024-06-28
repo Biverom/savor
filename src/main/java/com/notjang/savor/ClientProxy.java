@@ -24,6 +24,7 @@ import net.minecraftforge.client.event.RegisterShadersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -105,5 +106,13 @@ public class ClientProxy extends CommonProxy {
     @SubscribeEvent
     public void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ModModelLayers.CRACKER_LAYER, CrackerModel::createBodyLayer);
+    }
+
+    @SubscribeEvent
+    public void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
+        ItemStack itemStack = event.getCrafting();
+        if (itemStack.isEdible() && (itemStack.getTag() != null ? itemStack.getTag().getByte("FlavorModifier") : 0) > 0) {
+            //event.getEntity().playSound(SoundEffectInit.EFFECT_ABSOLUTE_EVADE.get());
+        }
     }
 }
