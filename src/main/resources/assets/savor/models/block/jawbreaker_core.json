@@ -1,0 +1,7 @@
+{
+	"render_type": "savor:jawbreaker",
+	"parent": "block/cube_all",
+	"textures": {
+		"all": "savor:block/jawbreaker_core"
+	}
+}

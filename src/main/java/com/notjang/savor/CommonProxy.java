@@ -36,6 +36,7 @@ public class CommonProxy {
 
         ItemInit.ITEMS.register(bus);
         BlockInit.BLOCKS.register(bus);
+        BlockEntityInit.BLOCK_ENTITIES.register(bus);
         EntityInit.ENTITIES.register(bus);
         MobEffectInit.MOB_EFFECTS.register(bus);
         SoundEffectInit.SOUND_EVENTS.register(bus);

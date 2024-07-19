@@ -2,6 +2,7 @@ package com.notjang.savor.init;
 
 import com.google.common.base.Supplier;
 import com.notjang.savor.SavorMod;
+import com.notjang.savor.block.JawbreakerCore;
 import com.notjang.savor.block.SaltBlock;
 import com.notjang.savor.init.ItemInit.InitFoods;
 import com.teamabnormals.neapolitan.common.block.FlavoredCakeBlock;
@@ -62,6 +63,11 @@ public class BlockInit {
 	public static final RegistryObject<Block> SALT_BLOCK = register("salt_block",
 			() -> new SaltBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_GRAY).randomTicks().strength(3.0f)
 					.sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()),
+			object -> () -> new BlockItem(object.get(), new Item.Properties().tab(SavorMod.SAVOR_TAB)));
+
+	public static final RegistryObject<Block> JAWBREAKER_CORE = register("jawbreaker_core",
+			() -> new JawbreakerCore(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_GRAY).randomTicks().strength(3.0f)
+					.sound(SoundType.DEEPSLATE).lightLevel(value -> 1).emissiveRendering((pState, pLevel, pPos) -> true).requiresCorrectToolForDrops()),
 			object -> () -> new BlockItem(object.get(), new Item.Properties().tab(SavorMod.SAVOR_TAB)));
 
 	private static RotatedPillarBlock log(MaterialColor p_50789_, MaterialColor p_50790_) {
