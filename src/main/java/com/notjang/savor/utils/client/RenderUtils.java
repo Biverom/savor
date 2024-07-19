@@ -6,7 +6,6 @@ import com.mojang.math.Matrix4f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
-import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
@@ -17,19 +16,19 @@ import java.awt.*;
 @OnlyIn(Dist.CLIENT)
 public class RenderUtils {
 
-    public static void renderJawbreakerShield(PoseStack stack, VertexConsumer builder, Level level, BlockPos center, float side) {
+    public static void renderShieldOutline(PoseStack stack, VertexConsumer builder, Level level, BlockPos center, float side) {
         float a = side / 2f;
         int intSide = Math.round(side);
 
-        renderShieldContactSide(stack, builder, level, Vec3.ZERO.add(-a, -a, -a), center, Direction.Axis.X, intSide, -1);
-        renderShieldContactSide(stack, builder, level, Vec3.ZERO.add(-a, -a, -a), center, Direction.Axis.Y, intSide, -1);
-        renderShieldContactSide(stack, builder, level, Vec3.ZERO.add(-a, -a, -a), center, Direction.Axis.Z, intSide, -1);
-        renderShieldContactSide(stack, builder, level, Vec3.ZERO.add(a-0.5f, -a, -a), center, Direction.Axis.X, intSide, 1);
-        renderShieldContactSide(stack, builder, level, Vec3.ZERO.add(-a, a-0.5f, -a), center, Direction.Axis.Y, intSide, 1);
-        renderShieldContactSide(stack, builder, level, Vec3.ZERO.add(-a, -a, a-0.5f), center, Direction.Axis.Z, intSide, 1);
+        renderShieldOutlineSide(stack, builder, level, Vec3.ZERO.add(-a+0.5f, -a, -a), center, Direction.Axis.X, intSide, -1);
+        renderShieldOutlineSide(stack, builder, level, Vec3.ZERO.add(-a, -a+0.5f, -a), center, Direction.Axis.Y, intSide, -1);
+        renderShieldOutlineSide(stack, builder, level, Vec3.ZERO.add(-a, -a, -a+0.5f), center, Direction.Axis.Z, intSide, -1);
+        renderShieldOutlineSide(stack, builder, level, Vec3.ZERO.add(a-0.5f, -a, -a), center, Direction.Axis.X, intSide, 1);
+        renderShieldOutlineSide(stack, builder, level, Vec3.ZERO.add(-a, a-0.5f, -a), center, Direction.Axis.Y, intSide, 1);
+        renderShieldOutlineSide(stack, builder, level, Vec3.ZERO.add(-a, -a, a-0.5f), center, Direction.Axis.Z, intSide, 1);
     }
 
-    private static void renderShieldContactSide(PoseStack stack, VertexConsumer builder, Level level, Vec3 corner, BlockPos center, Direction.Axis axisW, int size, int flipUV) {
+    private static void renderShieldOutlineSide(PoseStack stack, VertexConsumer builder, Level level, Vec3 corner, BlockPos center, Direction.Axis axisW, int size, int flipUV) {
         Direction.Axis axisU = null;
         Direction.Axis axisV = null;
 
@@ -52,13 +51,13 @@ public class RenderUtils {
                 BlockPos pb = center.offset(Vec3Floor(pos));
                 if (level.getBlockState(pb).isSolidRender(level, pb)) {
                     if (i != size - 1)
-                        renderShieldContactPart(stack, builder, level, pos, pb, axisU, axisV, axisW, 1, 1, flipUV);
+                        renderShieldOutlinePart(stack, builder, level, pos, pb, axisU, axisV, axisW, 1, 1, flipUV);
                     if (i != 0)
-                        renderShieldContactPart(stack, builder, level, pos, pb, axisU, axisV, axisW, -1, -1, flipUV);
+                        renderShieldOutlinePart(stack, builder, level, pos, pb, axisU, axisV, axisW, -1, -1, flipUV);
                     if (j != size - 1)
-                        renderShieldContactPart(stack, builder, level, pos, pb, axisV, axisU, axisW, 1, -1, flipUV);
+                        renderShieldOutlinePart(stack, builder, level, pos, pb, axisV, axisU, axisW, 1, -1, flipUV);
                     if (j != 0)
-                        renderShieldContactPart(stack, builder, level, pos, pb, axisV, axisU, axisW, -1, 1, flipUV);
+                        renderShieldOutlinePart(stack, builder, level, pos, pb, axisV, axisU, axisW, -1, 1, flipUV);
                 }
             }
         }
@@ -68,22 +67,22 @@ public class RenderUtils {
         return new Vec3i((int) Math.round(vec.x), (int) Math.round(vec.y), (int) Math.round(vec.z));
     }
 
-    private static void renderShieldContactPart(PoseStack stack, VertexConsumer builder, Level level, Vec3 p, BlockPos bp, Direction.Axis translateAxis, Direction.Axis scaleAxis, Direction.Axis widthAxis, int amount, int flip, int flipUV) {
+    private static void renderShieldOutlinePart(PoseStack stack, VertexConsumer builder, Level level, Vec3 p, BlockPos bp, Direction.Axis translateAxis, Direction.Axis scaleAxis, Direction.Axis widthAxis, int amount, int flip, int flipUV) {
         Matrix4f last = stack.last().pose();
 
         BlockPos nextPos = bp.relative(translateAxis, amount);
         if (!level.getBlockState(nextPos).isSolidRender(level, nextPos)) {
-            Vec3 pc = p.add(axisToVec3(translateAxis, 0.505f*amount));
+            Vec3 pc = p.add(axisToVec3(translateAxis, 0.501f*amount));
 
             if (widthAxis.isVertical()) flip *= -1;
 
-            Vec3 p0 = pc.add(axisToVec3(scaleAxis, 0.505f*flip));
-            Vec3 p1 = pc.subtract(axisToVec3(scaleAxis, 0.505f*flip));
-            Vec3 p2 = pc.subtract(axisToVec3(scaleAxis, 0.505f*flip)).subtract(axisToVec3(widthAxis, 0.5f));
-            Vec3 p3 = pc.add(axisToVec3(scaleAxis, 0.505f*flip)).subtract(axisToVec3(widthAxis, 0.5f));
+            Vec3 p0 = pc.add(axisToVec3(scaleAxis, 0.5f*flip));
+            Vec3 p1 = pc.subtract(axisToVec3(scaleAxis, 0.5f*flip));
+            Vec3 p2 = pc.subtract(axisToVec3(scaleAxis, 0.5f*flip)).subtract(axisToVec3(widthAxis, 1.0f));
+            Vec3 p3 = pc.add(axisToVec3(scaleAxis, 0.5f*flip)).subtract(axisToVec3(widthAxis, 1.0f));
 
-            float uv1 = 0.75f + (flipUV * 0.25f);
-            float uv2 = 0.75f + (-flipUV * 0.25f);
+            float uv1 = 0.5f + (flipUV * 0.5f);
+            float uv2 = 0.5f + (-flipUV * 0.5f);
 
             builder.vertex(last, (float) p0.x(), (float) p0.y(), (float) p0.z()).color(vecToFac(p0), 1.0f, 1.0f, 0.5f).uv(1f, uv1).uv2(0, 0).normal(0, 0, 0).endVertex();
             builder.vertex(last, (float) p1.x(), (float) p1.y(), (float) p1.z()).color(vecToFac(p1), 1.0f, 1.0f, 0.5f).uv(0f, uv1).uv2(0, 0).normal(0, 0, 0).endVertex();
@@ -138,102 +137,5 @@ public class RenderUtils {
         builder.vertex(last, (float) p1.x(), (float) p1.y(), (float) p1.z()).color(r, g, b, alpha).uv(0, 1).uv2(0, 0).normal((float)normal.x, (float)normal.y, (float)normal.z).endVertex();
         builder.vertex(last, (float) p2.x(), (float) p2.y(), (float) p2.z()).color(r, g, b, alpha).uv(0, 0).uv2(0, 0).normal((float)normal.x, (float)normal.y, (float)normal.z).endVertex();
         builder.vertex(last, (float) p3.x(), (float) p3.y(), (float) p3.z()).color(r, g, b, alpha).uv(1, 0).uv2(0, 0).normal((float)normal.x, (float)normal.y, (float)normal.z).endVertex();
-    }
-
-    public static void renderSphere(PoseStack mStack, VertexConsumer builder, float radius, int longs, int lats, Color color, float alpha, float endU) {
-        float r = color.getRed() / 255f;
-        float g = color.getGreen() / 255f;
-        float b = color.getBlue() / 255f;
-
-        Matrix4f last = mStack.last().pose();
-        float startU = 0;
-        float startV = 0;
-        float endV = Mth.PI;
-        float stepU = (endU - startU) / longs;
-        float stepV = (endV - startV) / lats;
-        for (int i = 0; i < longs; ++i) {
-            for (int j = 0; j < lats; ++j) {
-                float u = i * stepU + startU;
-                float v = j * stepV + startV;
-                float un = (i + 1 == longs) ? endU : (i + 1) * stepU + startU;
-                float vn = (j + 1 == lats) ? endV : (j + 1) * stepV + startV;
-                Vec3 p0 = parametricSphere(u, v, radius);
-                Vec3 p1 = parametricSphere(u, vn, radius);
-                Vec3 p2 = parametricSphere(un, v, radius);
-                Vec3 p3 = parametricSphere(un, vn, radius);
-
-                builder.vertex(last, (float) p1.x(), (float) p1.y(), (float) p1.z()).color(r, g, b, alpha).uv(0, 0).uv2(0, 0).normal(0, 0, 0).endVertex();
-                builder.vertex(last, (float) p0.x(), (float) p0.y(), (float) p0.z()).color(r, g, b, alpha).uv(0, 0).uv2(0, 0).normal(0, 0, 0).endVertex();
-                builder.vertex(last, (float) p2.x(), (float) p2.y(), (float) p2.z()).color(r, g, b, alpha).uv(0, 0).uv2(0, 0).normal(0, 0, 0).endVertex();
-                builder.vertex(last, (float) p3.x(), (float) p3.y(), (float) p3.z()).color(r, g, b, alpha).uv(0, 0).uv2(0, 0).normal(0, 0, 0).endVertex();
-            }
-        }
-    }
-
-    public static void renderSphere(PoseStack mStack, VertexConsumer builder, float radius, int longs, int lats, Color color, float alpha) {
-        renderSphere(mStack, builder, radius, longs, lats, color, alpha, Mth.PI * 2);
-    }
-
-    public static void renderSemiSphere(PoseStack mStack, VertexConsumer builder, float radius, int longs, int lats, Color color, float alpha) {
-        renderSphere(mStack, builder, radius, longs, lats, color, alpha, Mth.PI);
-    }
-
-    public static Vec3 parametricSphere(float u, float v, float r) {
-        return new Vec3(Mth.cos(u) * Mth.sin(v) * r, Mth.cos(v) * r, Mth.sin(u) * Mth.sin(v) * r);
-    }
-
-
-    public static void renderAura(PoseStack mStack, VertexConsumer builder, float radius, float size, int longs, Color color1, Color color2, float alpha1, float alpha2, boolean renderSide, boolean renderFloor) {
-        float r1 = color1.getRed() / 255f;
-        float g1 = color1.getGreen() / 255f;
-        float b1 = color1.getBlue() / 255f;
-
-        float r2 = color2.getRed() / 255f;
-        float g2 = color2.getGreen() / 255f;
-        float b2 = color2.getBlue() / 255f;
-
-        float startU = 0;
-        float endU = Mth.PI * 2;
-        float stepU = (endU - startU) / longs;
-        for (int i = 0; i < longs; ++i) {
-            float u = i * stepU + startU;
-            float un = (i + 1 == longs) ? endU : (i + 1) * stepU + startU;
-
-            auraPiece(mStack, builder, radius, size, u, r2, g2, b2, alpha2);
-            auraPiece(mStack, builder, radius, 0, u, r1, g2, b1, alpha1);
-            auraPiece(mStack, builder, radius, 0, un, r1, g2, b1, alpha1);
-            auraPiece(mStack, builder, radius, size, un, r2, g2, b2, alpha2);
-
-            if (renderSide) {
-                auraPiece(mStack, builder, radius, 0, u, r1, g2, b1, alpha1);
-                auraPiece(mStack, builder, radius, size, u, r2, g2, b2, alpha2);
-                auraPiece(mStack, builder, radius, size, un, r2, g2, b2, alpha2);
-                auraPiece(mStack, builder, radius, 0, un, r1, g2, b1, alpha1);
-            }
-
-            if (renderFloor) {
-                auraPiece(mStack, builder, 0, 0, u,r2, g2, b2, alpha2);
-                auraPiece(mStack, builder, 0, 0, un, r2, g2, b2, alpha2);
-                auraPiece(mStack, builder, radius, 0, u, r1, g1, b1, alpha1);
-                auraPiece(mStack, builder, radius, 0, un, r1, g1, b1, alpha1);
-
-                if (renderSide) {
-                    auraPiece(mStack, builder, 0, 0, un, r2, g2, b2, alpha2);
-                    auraPiece(mStack, builder, 0, 0, u,r2, g2, b2, alpha2);
-                    auraPiece(mStack, builder, radius, 0, un, r1, g1, b1, alpha1);
-                    auraPiece(mStack, builder, radius, 0, u, r1, g1, b1, alpha1);
-                }
-            }
-        }
-    }
-
-
-    public static void auraPiece(PoseStack mStack, VertexConsumer builder, float radius, float size, float angle, float r, float g, float b, float alpha) {
-        mStack.pushPose();
-        //mStack.mulPose(Axis.YP.rotationDegrees((float) Math.toDegrees(angle)));
-        mStack.translate(radius, 0, 0);
-        Matrix4f mat = mStack.last().pose();
-        builder.vertex(mat, 0, size, 0).color(r, g, b, alpha).uv(0, 0).uv2(0, 0).normal(0, 0, 0).endVertex();
-        mStack.popPose();
     }
 }

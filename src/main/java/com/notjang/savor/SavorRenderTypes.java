@@ -8,12 +8,31 @@ import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.client.event.RegisterShadersEvent;
+
+import java.io.IOException;
+import java.util.function.Consumer;
 
 public class SavorRenderTypes
 {
+
+    public static void registerShaders(RegisterShadersEvent event) {
+        try {
+            registerShader(event, SavorRenderTypes.jawbreakerShield(),"savor:rendertype_jawbreaker_shield", shaderInstance -> CustomRenderTypes.jawbreakerShieldShader = shaderInstance);
+            registerShader(event, SavorRenderTypes.jawbreakerShieldOutline(), "savor:rendertype_jawbreaker_shield_outline", shaderInstance -> CustomRenderTypes.jawbreakerShieldOutlineShader = shaderInstance);
+            registerShader(event, SavorRenderTypes.glowing(), "savor:rendertype_glowing", shaderInstance -> CustomRenderTypes.glowingShader = shaderInstance);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void registerShader(RegisterShadersEvent e, RenderType rt, String name, Consumer<ShaderInstance> onLoaded) throws IOException {
+        e.registerShader(new ShaderInstance(e.getResourceManager(), new ResourceLocation(name), rt.format()), onLoaded);
+    }
+
     // Accessor functon, ensures that you don't use the raw methods below unintentionally.
     public static RenderType jawbreakerShield() { return CustomRenderTypes.jawbreakerShield(); }
-    public static RenderType jawbreakerShieldContact() { return CustomRenderTypes.jawbreakerShieldContact(); }
+    public static RenderType jawbreakerShieldOutline() { return CustomRenderTypes.jawbreakerShieldOutline(); }
     public static RenderType glowing()
     {
         return CustomRenderTypes.glowing();
@@ -23,12 +42,12 @@ public class SavorRenderTypes
     {
         // Holds the object loaded via RegisterShadersEvent
         public static ShaderInstance jawbreakerShieldShader;
-        public static ShaderInstance jawbreakerShieldContactShader;
+        public static ShaderInstance jawbreakerShieldOutlineShader;
         public static ShaderInstance glowingShader;
 
         // Shader state for use in the render type, the supplier ensures it updates automatically with resource reloads
         private static final ShaderStateShard RENDERTYPE_JAWBREAKER_SHIELD_SHADER = new ShaderStateShard(() -> jawbreakerShieldShader);
-        private static final ShaderStateShard RENDERTYPE_JAWBREAKER_SHIELD_CONTACT_SHADER = new ShaderStateShard(() -> jawbreakerShieldContactShader);
+        private static final ShaderStateShard RENDERTYPE_JAWBREAKER_SHIELD_OUTLINE_SHADER = new ShaderStateShard(() -> jawbreakerShieldOutlineShader);
         private static final ShaderStateShard RENDERTYPE_GLOWING_SHADER = new ShaderStateShard(() -> glowingShader);
 
         // Dummy constructor needed to make java happy
@@ -48,7 +67,6 @@ public class SavorRenderTypes
                     .setWriteMaskState(new RenderStateShard.WriteMaskStateShard(true, false))
                     .setLightmapState(new RenderStateShard.LightmapStateShard(false))
                     .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
-                    .setTextureState(new RenderStateShard.TextureStateShard(new ResourceLocation(SavorMod.MOD_ID, "textures/shaders/jawbreaker_shield.png"), false, false))
                     .setShaderState(RENDERTYPE_JAWBREAKER_SHIELD_SHADER)
                     .createCompositeState(false);
             return create("savor:rendertype_jawbreaker_shield",
@@ -58,16 +76,16 @@ public class SavorRenderTypes
                             .put("UV0", DefaultVertexFormat.ELEMENT_UV0).build()), VertexFormat.Mode.QUADS, 2097152, true, false, rendertype$state);
         }
 
-        private static RenderType jawbreakerShieldContact()
+        private static RenderType jawbreakerShieldOutline()
         {
             RenderType.CompositeState rendertype$state = RenderType.CompositeState.builder()
                     .setWriteMaskState(new RenderStateShard.WriteMaskStateShard(true, false))
                     .setLightmapState(new RenderStateShard.LightmapStateShard(false))
                     .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
-                    .setTextureState(new RenderStateShard.TextureStateShard(new ResourceLocation(SavorMod.MOD_ID, "textures/shaders/jawbreaker_shield_contact.png"), false, false))
-                    .setShaderState(RENDERTYPE_JAWBREAKER_SHIELD_CONTACT_SHADER)
+                    .setTextureState(new RenderStateShard.TextureStateShard(new ResourceLocation(SavorMod.MOD_ID, "textures/misc/jawbreaker_shield_outline.png"), false, false))
+                    .setShaderState(RENDERTYPE_JAWBREAKER_SHIELD_OUTLINE_SHADER)
                     .createCompositeState(false);
-            return create("savor:rendertype_jawbreaker_shield_contact",
+            return create("savor:rendertype_jawbreaker_shield_outline",
                     new VertexFormat(ImmutableMap.<String, VertexFormatElement>builder()
                             .put("Position", DefaultVertexFormat.ELEMENT_POSITION)
                             .put("Color", DefaultVertexFormat.ELEMENT_COLOR)

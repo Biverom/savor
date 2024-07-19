@@ -24,17 +24,22 @@ public class JawbreakerCoreRenderer implements BlockEntityRenderer<JawbreakerCor
     @Override
     public void render(@NotNull JawbreakerCoreEntity pBlockEntity, float pPartialTick, PoseStack pPoseStack, @NotNull MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
 
-        VertexConsumer builder1 = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(SavorRenderTypes.jawbreakerShieldContact());
+        VertexConsumer builder1 = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(SavorRenderTypes.jawbreakerShieldOutline());
         pPoseStack.pushPose();
         pPoseStack.translate(1f, 1f, 1f);
-        RenderUtils.renderJawbreakerShield(pPoseStack, builder1, pBlockEntity.getLevel(), pBlockEntity.getBlockPos(), 9f);
+        RenderUtils.renderShieldOutline(pPoseStack, builder1, pBlockEntity.getLevel(), pBlockEntity.getBlockPos(), 9f);
         pPoseStack.popPose();
 
         VertexConsumer builder2 = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(SavorRenderTypes.jawbreakerShield());
         pPoseStack.pushPose();
         pPoseStack.translate(0.5f, 0.5f, 0.5f);
-        RenderUtils.renderCube(pPoseStack, builder2, 9.005f, Color.WHITE, 0.25f, false);
-        RenderUtils.renderCube(pPoseStack, builder2, -8.995f, Color.WHITE, 0.125f, false);
+        RenderUtils.renderCube(pPoseStack, builder2, 9.005f, Color.WHITE, 0.5f, false);
+        RenderUtils.renderCube(pPoseStack, builder2, -8.995f, Color.WHITE, 0.25f, false);
         pPoseStack.popPose();
+    }
+
+    @Override
+    public int getViewDistance() {
+        return 32;
     }
 }

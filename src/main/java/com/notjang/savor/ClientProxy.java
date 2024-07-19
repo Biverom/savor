@@ -1,6 +1,5 @@
 package com.notjang.savor;
 
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.notjang.savor.block.entity.client.JawbreakerCoreRenderer;
 import com.notjang.savor.entity.client.CrackerModel;
 import com.notjang.savor.entity.client.CrackerRenderer;
@@ -13,12 +12,10 @@ import com.notjang.savor.particle.NetherColaBubblePopParticle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterNamedRenderTypesEvent;
@@ -31,8 +28,6 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-
-import java.io.IOException;
 
 public class ClientProxy extends CommonProxy {
 
@@ -94,13 +89,7 @@ public class ClientProxy extends CommonProxy {
     @SubscribeEvent
     public void registerShaders(RegisterShadersEvent event)
     {
-        try {
-            event.registerShader(new ShaderInstance(event.getResourceManager(), new ResourceLocation("savor:rendertype_jawbreaker_shield"), DefaultVertexFormat.BLOCK), shaderInstance -> SavorRenderTypes.CustomRenderTypes.jawbreakerShieldShader = shaderInstance);
-            event.registerShader(new ShaderInstance(event.getResourceManager(), new ResourceLocation("savor:rendertype_jawbreaker_shield_contact"), DefaultVertexFormat.BLOCK), shaderInstance -> SavorRenderTypes.CustomRenderTypes.jawbreakerShieldContactShader = shaderInstance);
-            event.registerShader(new ShaderInstance(event.getResourceManager(), new ResourceLocation("savor:rendertype_glowing"), DefaultVertexFormat.POSITION_COLOR), shaderInstance -> SavorRenderTypes.CustomRenderTypes.glowingShader = shaderInstance);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        SavorRenderTypes.registerShaders(event);
     }
 
     @SubscribeEvent
