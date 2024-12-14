@@ -1,4 +1,4 @@
-package com.notjang.savor.utils.client;
+package com.notjang.savor.render.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

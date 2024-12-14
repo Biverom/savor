@@ -1,14 +1,17 @@
-package com.notjang.savor;
+package com.notjang.savor.proxy.client;
 
 import com.notjang.savor.block.entity.client.JawbreakerCoreRenderer;
+import com.notjang.savor.effect.client.ClientTenacityWallJump;
 import com.notjang.savor.entity.client.CrackerModel;
 import com.notjang.savor.entity.client.CrackerRenderer;
 import com.notjang.savor.entity.client.ModModelLayers;
 import com.notjang.savor.init.BlockEntityInit;
 import com.notjang.savor.init.EntityInit;
 import com.notjang.savor.init.ParticleInit;
-import com.notjang.savor.particle.NetherColaBubbleParticle;
-import com.notjang.savor.particle.NetherColaBubblePopParticle;
+import com.notjang.savor.particle.client.NetherColaBubbleParticle;
+import com.notjang.savor.particle.client.NetherColaBubblePopParticle;
+import com.notjang.savor.proxy.CommonProxy;
+import com.notjang.savor.render.client.SavorRenderTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.RenderType;
@@ -17,6 +20,8 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterNamedRenderTypesEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
@@ -29,6 +34,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
+@OnlyIn(Dist.CLIENT)
 public class ClientProxy extends CommonProxy {
 
     public static Minecraft minecraft;

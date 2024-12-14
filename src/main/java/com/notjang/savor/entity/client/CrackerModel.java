@@ -2,8 +2,8 @@ package com.notjang.savor.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.notjang.savor.entity.animations.ModAnimationDefinitions;
-import com.notjang.savor.entity.custom.CrackerEntity;
+import com.notjang.savor.entity.client.animations.ModAnimationDefinitions;
+import com.notjang.savor.entity.CrackerEntity;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;

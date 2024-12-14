@@ -1,4 +1,4 @@
-package com.notjang.savor.particle;
+package com.notjang.savor.particle.client;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.SpriteSet;

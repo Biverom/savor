@@ -2,6 +2,8 @@ package com.notjang.savor;
 
 import com.notjang.savor.init.ItemInit;
 import com.notjang.savor.network.PacketHandler;
+import com.notjang.savor.proxy.CommonProxy;
+import com.notjang.savor.proxy.client.ClientProxy;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;

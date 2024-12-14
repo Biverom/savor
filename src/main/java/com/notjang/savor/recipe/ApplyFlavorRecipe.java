@@ -1,4 +1,4 @@
-package com.notjang.savor;
+package com.notjang.savor.recipe;
 
 import com.notjang.savor.init.ItemInit;
 import com.notjang.savor.init.RecipeInit;

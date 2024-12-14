@@ -10,14 +10,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CrackerRecipeOverwrite {
-    public final Item item;
-    public final List<ItemStack> results;
-
-    public CrackerRecipeOverwrite(Item item, List<ItemStack> results) {
-        this.item = item;
-        this.results = results;
-    }
+public record CrackerRecipeOverwrite(Item item, List<ItemStack> results) {
 
     CrackerRecipeOverwrite setRegistryName(ResourceLocation registryName) {
         return this;

@@ -137,9 +137,6 @@ repositories {
         name = "Jared's maven"
         url = "https://maven.blamejared.com/"
     }
-    repositories {
-        maven { url "https://maven.ryanliptak.com/" }
-    }
 }
 
 dependencies {

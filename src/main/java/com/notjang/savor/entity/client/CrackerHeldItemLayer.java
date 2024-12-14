@@ -2,7 +2,7 @@ package com.notjang.savor.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
-import com.notjang.savor.entity.custom.CrackerEntity;
+import com.notjang.savor.entity.CrackerEntity;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;

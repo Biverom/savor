@@ -1,6 +1,5 @@
-package com.notjang.savor.entity.custom;
+package com.notjang.savor.entity;
 
-import com.notjang.savor.entity.CrackerLoader;
 import com.notjang.savor.init.EntityInit;
 import com.notjang.savor.init.ItemInit;
 import net.minecraft.core.particles.ItemParticleOption;

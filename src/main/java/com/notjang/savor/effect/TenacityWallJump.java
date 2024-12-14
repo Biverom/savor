@@ -1,4 +1,4 @@
-package com.notjang.savor;
+package com.notjang.savor.effect;
 
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;

@@ -1,7 +1,7 @@
 package com.notjang.savor.network;
 
-import com.notjang.savor.ClientProxy;
-import com.notjang.savor.CommonProxy;
+import com.notjang.savor.proxy.client.ClientProxy;
+import com.notjang.savor.proxy.CommonProxy;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkEvent;

@@ -2,9 +2,9 @@ package com.notjang.savor.block.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.notjang.savor.SavorRenderTypes;
+import com.notjang.savor.render.client.SavorRenderTypes;
 import com.notjang.savor.block.entity.JawbreakerCoreEntity;
-import com.notjang.savor.utils.client.RenderUtils;
+import com.notjang.savor.render.client.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -33,8 +33,8 @@ public class JawbreakerCoreRenderer implements BlockEntityRenderer<JawbreakerCor
         VertexConsumer builder2 = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(SavorRenderTypes.jawbreakerShield());
         pPoseStack.pushPose();
         pPoseStack.translate(0.5f, 0.5f, 0.5f);
-        RenderUtils.renderCube(pPoseStack, builder2, 9.005f, Color.WHITE, 0.5f, false);
-        RenderUtils.renderCube(pPoseStack, builder2, -8.995f, Color.WHITE, 0.25f, false);
+        RenderUtils.renderCube(pPoseStack, builder2, 9.005f, Color.WHITE, 1.0f, false);
+        RenderUtils.renderCube(pPoseStack, builder2, -8.995f, Color.WHITE, 0.5f, false);
         pPoseStack.popPose();
     }
 

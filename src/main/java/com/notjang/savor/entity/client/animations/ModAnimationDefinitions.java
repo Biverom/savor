@@ -1,10 +1,13 @@
-package com.notjang.savor.entity.animations;
+package com.notjang.savor.entity.client.animations;
 
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class ModAnimationDefinitions {
 
     public static final AnimationDefinition CRACKER_WALK = AnimationDefinition.Builder.withLength(0.96f).looping()

@@ -1,5 +1,6 @@
-package com.notjang.savor;
+package com.notjang.savor.effect.client;
 
+import com.notjang.savor.effect.TenacityWallJump;
 import com.notjang.savor.network.NMResetFallDistance;
 import com.notjang.savor.network.PacketHandler;
 import net.minecraft.client.player.LocalPlayer;

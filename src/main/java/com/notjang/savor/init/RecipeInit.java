@@ -1,6 +1,6 @@
 package com.notjang.savor.init;
 
-import com.notjang.savor.ApplyFlavorRecipe;
+import com.notjang.savor.recipe.ApplyFlavorRecipe;
 import com.notjang.savor.SavorMod;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleRecipeSerializer;

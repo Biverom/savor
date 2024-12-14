@@ -37,7 +37,7 @@ vec4 hsv2rgb(vec4 c) {
 
 vec2 GetGradient(vec2 intPos, float t) {
 
-    float rand = fract(sin(dot(intPos, vec2(12.9898, 78.233))) * 43758.5453);;
+    float rand = fract(sin(dot(intPos, vec2(12.9898, 78.233))) * 43758.5453);
 
     float angle = 6.283185 * rand + 4.0 * t * rand;
     return vec2(cos(angle), sin(angle));
@@ -77,12 +77,17 @@ void main() {
     float pixel = 16.0 * 9.0 / 2.0;
     auv = (floor(auv * pixel) / pixel) * 3.75;
     float value = Pseudo3dNoise(vec3(auv.x, auv.y, GameTime * 150)) * 1.5;
-    vec4 color = hsv2rgb(vec4(value, 0.2, 1.0, 1.0));
+    vec4 color = hsv2rgb(vec4(value, 0.3, 1.0, 1.0));
 
-    vec4 fullcol = mix(color, color*col, 0.2);
-    fullcol.a = vertexColor.a;
+    vec4 fullCol = mix(color, color*col, 0.2);
+    fullCol.a = vertexColor.a;
 
-    fragColor = fullcol;
+    float fac = pow(max(abs(uv.x - 0.5) / 0.5, abs(uv.y - 0.5) / 0.5), 2.0);
+
+    vec4 halfCol = fullCol;
+    halfCol.a = 0.1;
+
+    fragColor = mix(halfCol, fullCol, fac);
 
     fragColor.a *= (max(1.0 - (vertexDistance / 20.0), 0.0));
 }

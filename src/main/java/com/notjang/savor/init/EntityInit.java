@@ -1,7 +1,7 @@
 package com.notjang.savor.init;
 
 import com.notjang.savor.SavorMod;
-import com.notjang.savor.entity.custom.CrackerEntity;
+import com.notjang.savor.entity.CrackerEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.registries.DeferredRegister;

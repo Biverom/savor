@@ -81,8 +81,8 @@ public class CrackerLoader extends SimpleJsonResourceReloadListener {
 
         this.cachedRecipes.clear();
         this.recipeOverwrites.forEach(((resource, overwrite) -> {
-            cachedRecipes.put(overwrite.item, overwrite.results);
-            LOGGER.info(overwrite.item.toString() + " -> " + overwrite.results.toString());
+            cachedRecipes.put(overwrite.item(), overwrite.results());
+            LOGGER.info(overwrite.item().toString() + " -> " + overwrite.results().toString());
         }));
     }
 }

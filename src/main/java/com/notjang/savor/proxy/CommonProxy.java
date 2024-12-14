@@ -1,9 +1,10 @@
-package com.notjang.savor;
+package com.notjang.savor.proxy;
 
 import com.notjang.savor.effect.AcidPiercingMobEffect;
 import com.notjang.savor.effect.CarbonationMobEffect;
+import com.notjang.savor.effect.TenacityWallJump;
 import com.notjang.savor.entity.CrackerLoader;
-import com.notjang.savor.entity.custom.CrackerEntity;
+import com.notjang.savor.entity.CrackerEntity;
 import com.notjang.savor.init.*;
 import com.notjang.savor.network.NMSetAbsoluteLevel;
 import com.notjang.savor.network.PacketHandler;
