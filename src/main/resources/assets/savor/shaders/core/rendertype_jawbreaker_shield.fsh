@@ -73,10 +73,12 @@ void main() {
     col.rg -= vec2(normal.y / 2, normal.y / 2);
 
     vec2 uv = texCoord0;
-    vec2 auv = uv;
-    float pixel = 16.0 * 9.0 / 2.0;
-    auv = (floor(auv * pixel) / pixel) * 3.75;
-    float value = Pseudo3dNoise(vec3(auv.x, auv.y, GameTime * 150)) * 1.5;
+    float t = GameTime * 50;
+    float pixel = 16.0 * 9.0 / 3.0 / 2.0;
+    vec3 pos = vec3(vertexColor * 3.0) + 0.0001;
+    pos = (floor(pos * pixel) / pixel);
+    pos = pos + t;
+    float value = Pseudo3dNoise(pos) * 1.5;
     vec4 color = hsv2rgb(vec4(value, 0.3, 1.0, 1.0));
 
     vec4 fullCol = mix(color, color*col, 0.2);
@@ -88,6 +90,7 @@ void main() {
     halfCol.a = 0.1;
 
     fragColor = mix(halfCol, fullCol, fac);
+
 
     fragColor.a *= (max(1.0 - (vertexDistance / 20.0), 0.0));
 }

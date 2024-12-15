@@ -11,8 +11,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.awt.*;
-
 @OnlyIn(Dist.CLIENT)
 public class RenderUtils {
 
@@ -103,39 +101,60 @@ public class RenderUtils {
         };
     }
 
-    public static void renderCube(PoseStack stack, VertexConsumer builder, float side, Color color, float alpha, boolean renderBackside) {
-        float r = color.getRed() / 255f;
-        float g = color.getGreen() / 255f;
-        float b = color.getBlue() / 255f;
+    public static void renderShieldCube(PoseStack stack, VertexConsumer builder, float side, float alpha) {
+        Matrix4f transformationMatrix = stack.last().pose();
+        float halfSide = side / 2f;
 
-        Matrix4f last = stack.last().pose();
-        float a = side / 2f;
+        Vec3[] vertices = {
+                new Vec3(-halfSide, -halfSide, -halfSide), // p0
+                new Vec3(halfSide, -halfSide, -halfSide),  // p1
+                new Vec3(-halfSide, halfSide, -halfSide),  // p2
+                new Vec3(halfSide, halfSide, -halfSide),   // p3
+                new Vec3(-halfSide, -halfSide, halfSide),  // p4
+                new Vec3(halfSide, -halfSide, halfSide),   // p5
+                new Vec3(-halfSide, halfSide, halfSide),   // p6
+                new Vec3(halfSide, halfSide, halfSide)     // p7
+        };
 
-        Vec3 p0 = new Vec3(-a, -a, -a);
-        Vec3 p1 = new Vec3(a, -a, -a);
-        Vec3 p2 = new Vec3(-a, a, -a);
-        Vec3 p3 = new Vec3(a, a, -a);
-        Vec3 p4 = new Vec3(-a, -a, a);
-        Vec3 p5 = new Vec3(a, -a, a);
-        Vec3 p6 = new Vec3(-a, a, a);
-        Vec3 p7 = new Vec3(a, a, a);
+        Vec3[] normals = {
+                new Vec3(0, 0, -1), // Front face
+                new Vec3(-1, 0, 0), // Left face
+                new Vec3(0, 0, 1),  // Back face
+                new Vec3(1, 0, 0),  // Right face
+                new Vec3(0, -1, 0), // Bottom face
+                new Vec3(0, 1, 0)   // Top face
+        };
 
-        renderCubePart(builder, last, r, g, b, alpha, p1, p0, p2, p3, new Vec3(0, 0, -1));
-        renderCubePart(builder, last, r, g, b, alpha, p0, p4, p6, p2, new Vec3(-1, 0, 0));
-        renderCubePart(builder, last, r, g, b, alpha, p4, p5, p7, p6, new Vec3(0, 0, 1));
-        renderCubePart(builder, last, r, g, b, alpha, p5, p1, p3, p7, new Vec3(1, 0, 0));
-        renderCubePart(builder, last, r, g, b, alpha, p5, p4, p0, p1, new Vec3(0, -1, 0));
-        renderCubePart(builder, last, r, g, b, alpha, p3, p2, p6, p7, new Vec3(0, 1, 0));
+        int[][] faceIndices = {
+                {1, 0, 2, 3}, // Front
+                {0, 4, 6, 2}, // Left
+                {4, 5, 7, 6}, // Back
+                {5, 1, 3, 7}, // Right
+                {5, 4, 0, 1}, // Bottom
+                {3, 2, 6, 7}  // Top
+        };
 
-        if (renderBackside) {
-            renderCube(stack, builder, -side, color, alpha, false);
+        for (int i = 0; i < faceIndices.length; i++) {
+            renderShieldCubeFace(builder, transformationMatrix, alpha, vertices, faceIndices[i], normals[i]);
         }
     }
 
-    private static void renderCubePart(VertexConsumer builder, Matrix4f last, float r, float g, float b, float alpha, Vec3 p0, Vec3 p1, Vec3 p2, Vec3 p3, Vec3 normal) {
-        builder.vertex(last, (float) p0.x(), (float) p0.y(), (float) p0.z()).color(r, g, b, alpha).uv(1, 1).uv2(0, 0).normal((float)normal.x, (float)normal.y, (float)normal.z).endVertex();
-        builder.vertex(last, (float) p1.x(), (float) p1.y(), (float) p1.z()).color(r, g, b, alpha).uv(0, 1).uv2(0, 0).normal((float)normal.x, (float)normal.y, (float)normal.z).endVertex();
-        builder.vertex(last, (float) p2.x(), (float) p2.y(), (float) p2.z()).color(r, g, b, alpha).uv(0, 0).uv2(0, 0).normal((float)normal.x, (float)normal.y, (float)normal.z).endVertex();
-        builder.vertex(last, (float) p3.x(), (float) p3.y(), (float) p3.z()).color(r, g, b, alpha).uv(1, 0).uv2(0, 0).normal((float)normal.x, (float)normal.y, (float)normal.z).endVertex();
+    private static void renderShieldCubeFace(VertexConsumer builder, Matrix4f transformationMatrix, float alpha, Vec3[] vertices, int[] indices, Vec3 normal) {
+        for (int index : indices) {
+            renderShieldCubeVertex(builder, transformationMatrix, vertices[index], alpha, normal);
+        }
     }
+
+    private static void renderShieldCubeVertex(VertexConsumer builder, Matrix4f transformationMatrix, Vec3 position, float alpha, Vec3 normal) {
+        float red = Math.max(0, Math.min(1, (float) (position.x() / 2 + 0.5)));
+        float green = Math.max(0, Math.min(1, (float) (position.y() / 2 + 0.5)));
+        float blue = Math.max(0, Math.min(1, (float) (position.z() / 2 + 0.5)));
+
+        builder.vertex(transformationMatrix, (float) position.x(), (float) position.y(), (float) position.z())
+                .color(red, green, blue, alpha)
+                .uv(1, 1).uv2(0, 0)
+                .normal((float) normal.x, (float) normal.y, (float) normal.z)
+                .endVertex();
+    }
+
 }
