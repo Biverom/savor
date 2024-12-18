@@ -74,7 +74,7 @@ void main() {
 
     vec2 uv = texCoord0;
     float t = GameTime * 50;
-    float pixel = 16.0 * 9.0 / 3.0 / 2.0;
+    float pixel = 16.0 * 45.0 / 3.0 / 2.0;
     vec3 pos = vec3(vertexColor * 3.0) + 0.0001;
     pos = (floor(pos * pixel) / pixel);
     pos = pos + t;
@@ -91,6 +91,5 @@ void main() {
 
     fragColor = mix(halfCol, fullCol, fac);
 
-
-    fragColor.a *= (max(1.0 - (vertexDistance / 20.0), 0.0));
+    fragColor.a *= (max(1.0 - (vertexDistance / 50.0), 0.0));
 }

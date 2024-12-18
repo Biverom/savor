@@ -35,5 +35,5 @@ void main() {
     fragColor = color * ColorModulator;
     fragColor.a = preColor.a;
 
-    fragColor.a *= (max(1.0 - (vertexDistance / 20.0), 0.0));
+    fragColor.a *= (max(1.0 - (vertexDistance / 25.0), 0.0));
 }

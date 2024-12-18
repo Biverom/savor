@@ -19,25 +19,30 @@ public class JawbreakerCoreRenderer implements BlockEntityRenderer<JawbreakerCor
     public JawbreakerCoreRenderer(BlockEntityRendererProvider.Context context) {
 
     }
+
     @Override
     public void render(@NotNull JawbreakerCoreEntity pBlockEntity, float pPartialTick, PoseStack pPoseStack, @NotNull MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
-
         VertexConsumer builder1 = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(SavorRenderTypes.jawbreakerShieldOutline());
         pPoseStack.pushPose();
         pPoseStack.translate(1f, 1f, 1f);
-        RenderUtils.renderShieldOutline(pPoseStack, builder1, pBlockEntity.getLevel(), pBlockEntity.getBlockPos(), 9f);
+        RenderUtils.renderShieldOutline(pPoseStack, builder1, pBlockEntity.getLevel(), pBlockEntity.getBlockPos(), 45f);
         pPoseStack.popPose();
 
         VertexConsumer builder2 = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(SavorRenderTypes.jawbreakerShield());
         pPoseStack.pushPose();
         pPoseStack.translate(0.5f, 0.5f, 0.5f);
-        RenderUtils.renderShieldCube(pPoseStack, builder2, 9.005f, 1.0f);
-        RenderUtils.renderShieldCube(pPoseStack, builder2, -8.995f, 0.5f);
+        RenderUtils.renderShieldCube(pPoseStack, builder2, 45.005f, 1.0f);
+        RenderUtils.renderShieldCube(pPoseStack, builder2, -44.995f, 0.5f);
         pPoseStack.popPose();
     }
 
     @Override
     public int getViewDistance() {
-        return 32;
+        return 90;
+    }
+
+    @Override
+    public boolean shouldRenderOffScreen(@NotNull JawbreakerCoreEntity pBlockEntity) {
+        return true;
     }
 }

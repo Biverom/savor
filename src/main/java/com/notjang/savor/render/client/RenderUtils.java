@@ -106,23 +106,23 @@ public class RenderUtils {
         float halfSide = side / 2f;
 
         Vec3[] vertices = {
-                new Vec3(-halfSide, -halfSide, -halfSide), // p0
-                new Vec3(halfSide, -halfSide, -halfSide),  // p1
-                new Vec3(-halfSide, halfSide, -halfSide),  // p2
-                new Vec3(halfSide, halfSide, -halfSide),   // p3
-                new Vec3(-halfSide, -halfSide, halfSide),  // p4
-                new Vec3(halfSide, -halfSide, halfSide),   // p5
-                new Vec3(-halfSide, halfSide, halfSide),   // p6
-                new Vec3(halfSide, halfSide, halfSide)     // p7
+                new Vec3(-halfSide, -halfSide, -halfSide),
+                new Vec3(halfSide, -halfSide, -halfSide),
+                new Vec3(-halfSide, halfSide, -halfSide),
+                new Vec3(halfSide, halfSide, -halfSide),
+                new Vec3(-halfSide, -halfSide, halfSide),
+                new Vec3(halfSide, -halfSide, halfSide),
+                new Vec3(-halfSide, halfSide, halfSide),
+                new Vec3(halfSide, halfSide, halfSide)
         };
 
         Vec3[] normals = {
-                new Vec3(0, 0, -1), // Front face
-                new Vec3(-1, 0, 0), // Left face
-                new Vec3(0, 0, 1),  // Back face
-                new Vec3(1, 0, 0),  // Right face
-                new Vec3(0, -1, 0), // Bottom face
-                new Vec3(0, 1, 0)   // Top face
+                new Vec3(0, 0, -1), // Front
+                new Vec3(-1, 0, 0), // Left
+                new Vec3(0, 0, 1),  // Back
+                new Vec3(1, 0, 0),  // Right
+                new Vec3(0, -1, 0), // Bottom
+                new Vec3(0, 1, 0)   // Top
         };
 
         int[][] faceIndices = {
@@ -134,27 +134,31 @@ public class RenderUtils {
                 {3, 2, 6, 7}  // Top
         };
 
+        float[][] uvMappings = {
+                {1, 1}, {0, 1}, {0, 0}, {1, 0} // UV coordinates for each vertex in a face
+        };
+
         for (int i = 0; i < faceIndices.length; i++) {
-            renderShieldCubeFace(builder, transformationMatrix, alpha, vertices, faceIndices[i], normals[i]);
+            for (int j = 0; j < faceIndices[i].length; j++) {
+                Vec3 position = vertices[faceIndices[i][j]];
+                Vec3 normal = normals[i];
+
+                float u = uvMappings[j][0];
+                float v = uvMappings[j][1];
+
+                float red = Math.max(0, Math.min(1, (float) (position.x() / 2 + 0.5)));
+                float green = Math.max(0, Math.min(1, (float) (position.y() / 2 + 0.5)));
+                float blue = Math.max(0, Math.min(1, (float) (position.z() / 2 + 0.5)));
+
+                builder.vertex(transformationMatrix, (float) position.x(), (float) position.y(), (float) position.z())
+                        .color(red, green, blue, alpha)
+                        .uv(u, v).uv2(0, 0)
+                        .normal((float) normal.x, (float) normal.y, (float) normal.z)
+                        .endVertex();
+            }
         }
     }
 
-    private static void renderShieldCubeFace(VertexConsumer builder, Matrix4f transformationMatrix, float alpha, Vec3[] vertices, int[] indices, Vec3 normal) {
-        for (int index : indices) {
-            renderShieldCubeVertex(builder, transformationMatrix, vertices[index], alpha, normal);
-        }
-    }
 
-    private static void renderShieldCubeVertex(VertexConsumer builder, Matrix4f transformationMatrix, Vec3 position, float alpha, Vec3 normal) {
-        float red = Math.max(0, Math.min(1, (float) (position.x() / 2 + 0.5)));
-        float green = Math.max(0, Math.min(1, (float) (position.y() / 2 + 0.5)));
-        float blue = Math.max(0, Math.min(1, (float) (position.z() / 2 + 0.5)));
-
-        builder.vertex(transformationMatrix, (float) position.x(), (float) position.y(), (float) position.z())
-                .color(red, green, blue, alpha)
-                .uv(1, 1).uv2(0, 0)
-                .normal((float) normal.x, (float) normal.y, (float) normal.z)
-                .endVertex();
-    }
 
 }
